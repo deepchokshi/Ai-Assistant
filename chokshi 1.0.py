@@ -10,6 +10,8 @@ Created on Thu Sep 10 12:29:11 2020
 import pyttsx3
 import datetime
 import speech_recognition as sr
+import wikipedia
+import smtplib
 
 engine = pyttsx3.init()
 
@@ -45,8 +47,6 @@ def wishme():
     
     speak("Chokshi is at your service. Please tell me how can I help you")
 
-
-
 def Takecommand():
     r=sr.Recognizer()
     with sr.Microphone() as source:
@@ -63,4 +63,22 @@ def Takecommand():
         return "None"
     return query
 
-Takecommand()
+
+if __name__ == "__main__":
+
+    while True:
+        query = Takecommand().lower()
+
+        if "time" in query:
+            time()
+        elif "date" in query:
+            date()
+        elif "wikipeida" or "Wikipedia" in query:
+            speak("Searching....")
+            query=query.replace("Wikipedia","")
+            result=wikipedia.summary(query,sentences=3)
+            speak("According to Wikipedia")
+            print (result)
+            speak(result)
+        elif "exit" in query:
+            break
